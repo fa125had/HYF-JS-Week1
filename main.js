@@ -1,4 +1,5 @@
 const [headerTitle] = document.getElementsByClassName('header__title');
+let animationId;
 
 const generateRandomColor = (alpha = 1.0) => {
   const randomRed = Math.floor(Math.random() * 255);
@@ -17,22 +18,23 @@ const styleChanger = () => {
   headerTitle.style.fontSize = `${fontSize}px`;
   headerTitle.parentElement.style.backgroundColor = `${generateRandomColor(Math.random() * 0.7)}`;
   headerTitle.parentElement.style.borderRadius = `${fontSize / 4}px`;
+  animationId = requestAnimationFrame(styleChanger);
+
 
 }
-let intervalId;
+
 const clickHandler = () => {
-  intervalId = setInterval(() => {
-    styleChanger();
-  }, 100);
+  animationId = requestAnimationFrame(styleChanger);
 };
 
 const stopChangingStyles = () => {
-  clearInterval(intervalId);
+  cancelAnimationFrame(animationId);
   if (newStyleButton.parentElement.querySelector('#pauseBtn')) {
     const pauseButton = newStyleButton.parentElement.querySelector('#pauseBtn');
     pauseButton.remove();
   }
 };
+
 const newStyleButton = document.getElementById('mainBtn');
 newStyleButton.addEventListener('click', () => {
   clickHandler();
