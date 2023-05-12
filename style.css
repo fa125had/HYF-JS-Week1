@@ -18,6 +18,9 @@ body {
   align-items: center;
   justify-content: center;
 }
+header {
+  overflow: hidden;
+}
 header .header__container .header__title {
   max-width: 100%;
   font-size: 2.5rem;
