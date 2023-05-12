@@ -1,4 +1,6 @@
 const [headerTitle] = document.getElementsByClassName('header__title');
+const newStyleButton = document.getElementById('mainBtn');
+let pauseInterval;
 let animationId;
 
 const generateRandomColor = (alpha = 1.0) => {
@@ -19,33 +21,41 @@ const styleChanger = () => {
   headerTitle.parentElement.style.backgroundColor = `${generateRandomColor(Math.random() * 0.7)}`;
   headerTitle.parentElement.style.borderRadius = `${fontSize / 4}px`;
   animationId = requestAnimationFrame(styleChanger);
-
-
 }
 
 const clickHandler = () => {
   animationId = requestAnimationFrame(styleChanger);
+  newStyleButton.style.display = 'none';
 };
 
 const stopChangingStyles = () => {
-  cancelAnimationFrame(animationId);
   if (newStyleButton.parentElement.querySelector('#pauseBtn')) {
+    newStyleButton.style.display = '';
     const pauseButton = newStyleButton.parentElement.querySelector('#pauseBtn');
     pauseButton.remove();
+    cancelAnimationFrame(animationId);
+    clearInterval(pauseInterval);
+    headerTitle.style.fontSize = '';
+    headerTitle.style.border = '';
+    headerTitle.parentElement.style.backgroundColor = '';
+    headerTitle.style.backgroundImage = '';
+    headerTitle.style.textShadow = '';
   }
+
 };
 
-const newStyleButton = document.getElementById('mainBtn');
+
 newStyleButton.addEventListener('click', () => {
   clickHandler();
-  if (!newStyleButton.parentElement.querySelector('#pauseBtn')) {
-    const newButton = document.createElement('button');
-    newStyleButton.parentElement.appendChild(newButton);
-    newButton.className = 'button',
-      newButton.id = 'pauseBtn',
-      newButton.textContent = 'Pause ||',
-      newButton.onclick = stopChangingStyles;
-  }
-
+  pauseInterval = setInterval(() => {
+    if (!newStyleButton.parentElement.querySelector('#pauseBtn')) {
+      const newButton = document.createElement('button');
+      newStyleButton.parentElement.appendChild(newButton);
+      newButton.className = 'button',
+        newButton.id = 'pauseBtn',
+        newButton.textContent = `Im done, Thanks man! 🤯`,
+        newButton.onclick = stopChangingStyles;
+    }
+  }, 2000);
 });
 

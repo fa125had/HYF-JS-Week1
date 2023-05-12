@@ -37,6 +37,11 @@ header .header__container .header__title {
   -moz-background-clip: text;
   -moz-text-fill-color: transparent;
 }
+.button__container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
 .button__container .button {
   background: rgb(149, 244, 6);
   padding: 1rem 2rem;
