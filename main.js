@@ -1,5 +1,5 @@
 const [headerTitle] = document.getElementsByClassName('header__title');
-const newStyleButton = document.getElementById('mainBtn');
+const hypnotizeButton = document.getElementById('mainBtn');
 let pauseInterval;
 let animationId;
 
@@ -9,8 +9,9 @@ const generateRandomColor = (alpha = 1.0) => {
   const randomBlue = Math.floor(Math.random() * 255);
   const newRandomColor = `rgba(${randomRed}, ${randomGreen}, ${randomBlue} , ${alpha})`;
   return newRandomColor;
-}
-const styleChanger = () => {
+};
+
+const applyStyles = () => {
   const gradientAngle = Math.random() * 360;
   const fontSize = Math.floor(Math.random() * (85 - 60) + 30);
   headerTitle.style.backgroundImage = `linear-gradient(${gradientAngle}deg , ${generateRandomColor()} , ${generateRandomColor()} , ${generateRandomColor()})`;
@@ -20,18 +21,13 @@ const styleChanger = () => {
   headerTitle.style.fontSize = `${fontSize}px`;
   headerTitle.parentElement.style.backgroundColor = `${generateRandomColor(Math.random() * 0.7)}`;
   headerTitle.parentElement.style.borderRadius = `${fontSize / 4}px`;
-  animationId = requestAnimationFrame(styleChanger);
+  animationId = requestAnimationFrame(applyStyles);
 }
 
-const clickHandler = () => {
-  animationId = requestAnimationFrame(styleChanger);
-  newStyleButton.style.display = 'none';
-};
-
-const stopChangingStyles = () => {
-  if (newStyleButton.parentElement.querySelector('#pauseBtn')) {
-    newStyleButton.style.display = '';
-    const pauseButton = newStyleButton.parentElement.querySelector('#pauseBtn');
+const resetStyles = () => {
+  if (hypnotizeButton.parentElement.querySelector('#pauseBtn')) {
+    hypnotizeButton.style.display = '';
+    const pauseButton = hypnotizeButton.parentElement.querySelector('#pauseBtn');
     pauseButton.remove();
     cancelAnimationFrame(animationId);
     clearInterval(pauseInterval);
@@ -41,20 +37,23 @@ const stopChangingStyles = () => {
     headerTitle.style.backgroundImage = '';
     headerTitle.style.textShadow = '';
   }
-
 };
 
+const clickHandler = () => {
+  animationId = requestAnimationFrame(applyStyles);
+  hypnotizeButton.style.display = 'none';
+};
 
-newStyleButton.addEventListener('click', () => {
+hypnotizeButton.addEventListener('click', () => {
   clickHandler();
   pauseInterval = setInterval(() => {
-    if (!newStyleButton.parentElement.querySelector('#pauseBtn')) {
-      const newButton = document.createElement('button');
-      newStyleButton.parentElement.appendChild(newButton);
-      newButton.className = 'button',
-        newButton.id = 'pauseBtn',
-        newButton.textContent = `Im done, Thanks man! 🤯`,
-        newButton.onclick = stopChangingStyles;
+    if (!hypnotizeButton.parentElement.querySelector('#pauseBtn')) {
+      const pauseButton = document.createElement('button');
+      hypnotizeButton.parentElement.appendChild(pauseButton);
+      pauseButton.className = 'button',
+      pauseButton.id = 'pauseBtn',
+      pauseButton.textContent = `Im done, Thanks man! 🤯`,
+      pauseButton.onclick = resetStyles;
     }
   }, 2000);
 });
