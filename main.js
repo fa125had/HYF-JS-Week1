@@ -13,7 +13,7 @@ const generateRandomColor = (alpha = 1.0) => {
 
 const applyStyles = () => {
   const gradientAngle = Math.random() * 360;
-  const fontSize = Math.floor(Math.random() * (85 - 60) + 30);
+  const fontSize = Math.floor(Math.random() * (80 - 60) + 60);
   headerTitle.style.backgroundImage = `linear-gradient(${gradientAngle}deg , ${generateRandomColor()} , ${generateRandomColor()} , ${generateRandomColor()})`;
   headerTitle.style.border = `${fontSize / 20}px solid ${generateRandomColor()}`;
   headerTitle.style.borderRadius = `${fontSize / 4}px`;
